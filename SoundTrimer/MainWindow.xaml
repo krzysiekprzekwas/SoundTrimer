@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoundTrimer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Sound Trimer" Height="350" Width="525">
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10">
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Name="btnLoad">Load MP3</Button>
+            </WrapPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Name="lblTitle" Content="Title" HorizontalContentAlignment="Center" Margin="5" />
+                </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Name="lblStatus" Content="00:00/00:00" HorizontalContentAlignment="Center" Margin="5" />
+                <Slider Name="sliProgress" Width="100" />
+            </StackPanel>
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Name="btnPlay">Play</Button>
+                <Button Name="btnPause" Margin="5,0">Pause</Button>
+                <Button Name="btnStop">Stop</Button>
+            </WrapPanel>
+        </StackPanel>
     </Grid>
 </Window>
