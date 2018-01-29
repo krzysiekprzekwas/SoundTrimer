@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,34 +23,23 @@ namespace SoundTrimer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MediaPlayer mediaPlayer = new MediaPlayer();
+        private WaveOutEvent waveOut = new WaveOutEvent();
+
+        private Mp3FileReader mp3Reader;
 
         private DispatcherTimer timer = new DispatcherTimer();
 
         public MainWindow()
         {
             InitializeComponent();
-            mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
-        }
-
-        private void MediaPlayer_MediaOpened(object sender, EventArgs e)
-        {
-            lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
-
-            sliProgress.Minimum = 0;
-            sliProgress.Maximum = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-
+            
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
-            if (mediaPlayer.Source != null)
-            {
-                lblStatus.Content = String.Format("{0} / {1}", mediaPlayer.Position.ToString(@"mm\:ss"), mediaPlayer.NaturalDuration.TimeSpan.ToString(@"mm\:ss"));
-                sliProgress.Value = mediaPlayer.Position.TotalSeconds;
-            }
-            else
-                lblStatus.Content = "00:00/00:00";
+            lblStatus.Content = String.Format("{0} / {1}", mp3Reader.CurrentTime.ToString(@"mm\:ss"), mp3Reader.TotalTime.ToString(@"mm\:ss"));
+            sliProgress.Value = mp3Reader.CurrentTime.TotalSeconds;
+            
         }
         
         private void btnLoad_Click(object sender, RoutedEventArgs e)
@@ -58,8 +48,11 @@ namespace SoundTrimer
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                mediaPlayer.Open(new Uri(openFileDialog.FileName));
+                mp3Reader = new Mp3FileReader(openFileDialog.FileName);
+                waveOut.Init(mp3Reader);
                 lblTitle.Content = System.IO.Path.GetFileName(openFileDialog.FileName);
+                sliProgress.Minimum = 0;
+                sliProgress.Maximum = mp3Reader.TotalTime.TotalSeconds;
             }
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += timer_Tick;
@@ -67,19 +60,20 @@ namespace SoundTrimer
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Play();
+            waveOut.Play();
             timer.Start();
         }
 
         private void btnPause_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Pause();
+            waveOut.Pause();
             timer.Stop();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Stop();
+            waveOut.Stop();
+            mp3Reader.Position = 0;
         }
     }
 }
