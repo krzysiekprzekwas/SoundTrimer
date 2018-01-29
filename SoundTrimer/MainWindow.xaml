@@ -9,19 +9,19 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <WrapPanel HorizontalAlignment="Center">
-                <Button Name="btnLoad">Load MP3</Button>
+                <Button Name="btnLoad" Click="btnLoad_Click">Load MP3</Button>
             </WrapPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Name="lblTitle" Content="Title" HorizontalContentAlignment="Center" Margin="5" />
-                </StackPanel>
+                <Label x:Name="lblTitle" Content="Title" HorizontalContentAlignment="Center" Margin="5" />
+            </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Name="lblStatus" Content="00:00/00:00" HorizontalContentAlignment="Center" Margin="5" />
-                <Slider Name="sliProgress" Width="100" />
+                <Slider x:Name="sliProgress" Width="100" />
             </StackPanel>
             <WrapPanel HorizontalAlignment="Center">
-                <Button Name="btnPlay">Play</Button>
-                <Button Name="btnPause" Margin="5,0">Pause</Button>
-                <Button Name="btnStop">Stop</Button>
+                <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
+                <Button Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
+                <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
         </StackPanel>
     </Grid>
