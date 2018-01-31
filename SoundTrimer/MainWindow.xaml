@@ -19,9 +19,9 @@
                 <Slider x:Name="sliProgress" Width="100" Thumb.DragCompleted="sliProgress_DragCompleted" Thumb.DragStarted="sliProgress_DragStarted"/>
             </StackPanel>
             <WrapPanel HorizontalAlignment="Center">
-                <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>
-                <Button Name="btnPause" Margin="5,0" Click="btnPause_Click">Pause</Button>
-                <Button Name="btnStop" Click="btnStop_Click">Stop</Button>
+                <Button x:Name="btnPlay" IsEnabled="False" Click="btnPlay_Click">Play</Button>
+                <Button x:Name="btnPause" IsEnabled="False" Margin="5,0" Click="btnPause_Click">Pause</Button>
+                <Button x:Name="btnStop" IsEnabled="False" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
         </StackPanel>
     </Grid>

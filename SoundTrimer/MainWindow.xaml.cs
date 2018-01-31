@@ -61,6 +61,10 @@ namespace SoundTrimer
             }
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += timer_Tick;
+
+            btnPause.IsEnabled = true;
+            btnPlay.IsEnabled = true;
+            btnStop.IsEnabled = true;
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
