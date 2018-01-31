@@ -16,7 +16,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label Name="lblStatus" Content="00:00/00:00" HorizontalContentAlignment="Center" Margin="5" />
-                <Slider x:Name="sliProgress" Width="100" />
+                <Slider x:Name="sliProgress" Width="100" Thumb.DragCompleted="sliProgress_DragCompleted" Thumb.DragStarted="sliProgress_DragStarted"/>
             </StackPanel>
             <WrapPanel HorizontalAlignment="Center">
                 <Button Name="btnPlay" Click="btnPlay_Click">Play</Button>

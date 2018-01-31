@@ -2,6 +2,7 @@
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,8 @@ namespace SoundTrimer
 
         private DispatcherTimer timer = new DispatcherTimer();
 
+        private bool _isDrag = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +41,9 @@ namespace SoundTrimer
         void timer_Tick(object sender, EventArgs e)
         {
             lblStatus.Content = String.Format("{0} / {1}", mp3Reader.CurrentTime.ToString(@"mm\:ss"), mp3Reader.TotalTime.ToString(@"mm\:ss"));
-            sliProgress.Value = mp3Reader.CurrentTime.TotalSeconds;
+
+            if (!_isDrag)
+                sliProgress.Value = mp3Reader.CurrentTime.TotalSeconds;
             
         }
         
@@ -73,7 +78,25 @@ namespace SoundTrimer
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             waveOut.Stop();
-            mp3Reader.Position = 0;
+            mp3Reader.Seek(0, SeekOrigin.Begin);
+        }
+
+        private void sliProgress_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+
+            var sl = sender as Slider;
+
+            var val = sl.Value;
+
+
+            mp3Reader.CurrentTime = TimeSpan.FromSeconds((int)sliProgress.Value);
+
+            _isDrag = false;
+        }
+
+        private void sliProgress_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            _isDrag = true;
         }
     }
 }
