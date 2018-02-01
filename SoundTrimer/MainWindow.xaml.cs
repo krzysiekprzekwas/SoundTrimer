@@ -107,5 +107,15 @@ namespace SoundTrimer
         {
             _isDrag = true;
         }
+
+        private void Border_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                
+                loadFile(files[0]);
+            }
+        }
     }
 }

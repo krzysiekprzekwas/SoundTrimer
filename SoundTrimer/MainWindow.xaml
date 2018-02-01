@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <WrapPanel HorizontalAlignment="Center">
-                <Border>
+                <Border  AllowDrop="True" Drop="Border_Drop">
                     <Border.Background>
                         <SolidColorBrush Color="AliceBlue"/>
                     </Border.Background>
