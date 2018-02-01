@@ -53,12 +53,17 @@ namespace SoundTrimer
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                mp3Reader = new Mp3FileReader(openFileDialog.FileName);
-                waveOut.Init(mp3Reader);
-                lblTitle.Content = System.IO.Path.GetFileName(openFileDialog.FileName);
-                sliProgress.Minimum = 0;
-                sliProgress.Maximum = mp3Reader.TotalTime.TotalSeconds;
+                loadFile(openFileDialog.FileName);
             }
+        }
+
+        private void loadFile(string filePath)
+        {
+            mp3Reader = new Mp3FileReader(filePath);
+            waveOut.Init(mp3Reader);
+            lblTitle.Content = System.IO.Path.GetFileName(filePath);
+            sliProgress.Minimum = 0;
+            sliProgress.Maximum = mp3Reader.TotalTime.TotalSeconds;
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += timer_Tick;
 
