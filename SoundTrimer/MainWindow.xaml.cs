@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Drawing;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -16,6 +17,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using WaveFormRendererLib;
+using System.Drawing.Imaging;
 
 namespace SoundTrimer
 {
@@ -70,6 +73,45 @@ namespace SoundTrimer
             btnPause.IsEnabled = true;
             btnPlay.IsEnabled = true;
             btnStop.IsEnabled = true;
+
+            var rnd = new WaveFormRenderer();
+
+
+            var topSpacerColor = System.Drawing.Color.FromArgb(64, 83, 22, 3);
+            var soundCloudOrangeTransparentBlocks = new SoundCloudBlockWaveFormSettings(System.Drawing.Color.FromArgb(196, 197, 53, 0), topSpacerColor, System.Drawing.Color.FromArgb(196, 79, 26, 0),
+                System.Drawing.Color.FromArgb(64, 79, 79, 79))
+            {
+                Name = "SoundCloud Orange Transparent Blocks",
+                PixelsPerPeak = 2,
+                SpacerPixels = 1,
+                TopSpacerGradientStartColor = topSpacerColor,
+                BackgroundColor = System.Drawing.Color.Transparent
+            };
+
+            WaveFormRendererSettings settings = soundCloudOrangeTransparentBlocks;
+            settings.TopHeight = 50;
+            settings.BottomHeight = 20;
+            settings.Width = 200;
+            settings.DecibelScale = false;
+
+            var img = rnd.Render(filePath, settings);
+
+            var bitmapImage = new BitmapImage();
+
+            using (var ms = new MemoryStream())
+            {
+                img.Save(ms, ImageFormat.Bmp);
+                ms.Seek(0, SeekOrigin.Begin);
+
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = ms;
+                bitmapImage.EndInit();
+
+                
+            }
+
+            aimg.Source = bitmapImage;
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
