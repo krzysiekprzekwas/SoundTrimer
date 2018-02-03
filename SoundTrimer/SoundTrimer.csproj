@@ -58,13 +58,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RmsPeakProvider.cs" />
-    <Compile Include="SamplingPeakProvider.cs" />
-    <Compile Include="SoundCloudBlockWaveFormSettings.cs" />
-    <Compile Include="SoundCloudOriginalSettings.cs" />
-    <Compile Include="StandardWaveFormRendererSettings.cs" />
-    <Compile Include="WaveFormRenderer.cs" />
-    <Compile Include="WaveFormRendererSettings.cs" />
+    <Compile Include="WaveFormRendererLib\AveragePeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\DecibelPeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\IPeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\MaxPeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\PeakInfo.cs" />
+    <Compile Include="WaveFormRendererLib\PeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\RmsPeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\SamplingPeakProvider.cs" />
+    <Compile Include="WaveFormRendererLib\SoundCloudBlockWaveFormSettings.cs" />
+    <Compile Include="WaveFormRendererLib\SoundCloudOriginalSettings.cs" />
+    <Compile Include="WaveFormRendererLib\StandardWaveFormRendererSettings.cs" />
+    <Compile Include="WaveFormRendererLib\WaveFormRenderer.cs" />
+    <Compile Include="WaveFormRendererLib\WaveFormRendererSettings.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,18 +79,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AveragePeakProvider.cs" />
-    <Compile Include="DecibelPeakProvider.cs" />
-    <Compile Include="IPeakProvider.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaxPeakProvider.cs" />
-    <Compile Include="PeakInfo.cs" />
-    <Compile Include="PeakProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
