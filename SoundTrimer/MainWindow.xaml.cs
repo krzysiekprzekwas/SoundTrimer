@@ -19,13 +19,9 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WaveFormRendererLib;
 using System.Drawing.Imaging;
-using System.Windows.Media.Imaging;
 
 namespace SoundTrimer
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private WaveOutEvent waveOut = new WaveOutEvent();
@@ -61,7 +57,7 @@ namespace SoundTrimer
             }
         }
 
-        private void loadFile(string filePath)
+        private async void loadFile(string filePath)
         {
             mp3Reader = new Mp3FileReader(filePath);
             waveOut.Init(mp3Reader);
@@ -75,8 +71,23 @@ namespace SoundTrimer
             btnPlay.IsEnabled = true;
             btnStop.IsEnabled = true;
 
-            var rnd = new WaveFormRenderer();
+            var processedBitmap = await RenderWaveAsync(filePath);
+            
+            
+            aimg.Source = processedBitmap;
+        }
 
+        public async Task<BitmapImage> RenderWaveAsync(string filePath)
+        {
+            //on bitmap asynchronously
+            return await Task.Run(() => {
+                return RenderWave(filePath);
+            });
+        }
+
+        private BitmapImage RenderWave(string filePath)
+        {
+            var rnd = new WaveFormRenderer();
 
             var topSpacerColor = System.Drawing.Color.FromArgb(64, 83, 22, 3);
             var soundCloudOrangeTransparentBlocks = new SoundCloudBlockWaveFormSettings(System.Drawing.Color.FromArgb(196, 197, 53, 0), topSpacerColor, System.Drawing.Color.FromArgb(196, 79, 26, 0),
@@ -95,12 +106,11 @@ namespace SoundTrimer
             settings.Width = 500;
             settings.DecibelScale = false;
 
-            var img = rnd.Render(filePath, new RmsPeakProvider(200),  settings);
+            var img = rnd.Render(filePath, new RmsPeakProvider(200), settings);
 
             var bmp = (Bitmap)img;
 
-            aimg.Source = ToBitmapImage(bmp);
-
+            return ToBitmapImage(bmp);
         }
 
         public BitmapImage ToBitmapImage(Bitmap bitmap)
