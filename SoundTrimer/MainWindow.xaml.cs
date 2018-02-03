@@ -91,11 +91,11 @@ namespace SoundTrimer
 
             WaveFormRendererSettings settings = soundCloudOrangeTransparentBlocks;
             settings.TopHeight = 50;
-            settings.BottomHeight = 20;
-            settings.Width = 200;
+            settings.BottomHeight = 0;
+            settings.Width = 500;
             settings.DecibelScale = false;
 
-            var img = rnd.Render(filePath, settings);
+            var img = rnd.Render(filePath, new RmsPeakProvider(200),  settings);
 
             var bmp = (Bitmap)img;
 

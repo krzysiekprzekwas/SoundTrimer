@@ -32,7 +32,7 @@
                 <Button x:Name="btnStop" IsEnabled="False" Click="btnStop_Click">Stop</Button>
             </WrapPanel>
             
-            <Image x:Name="aimg"/>
+            <Image x:Name="aimg" Width="450" Height="100"/>
         </StackPanel>
     </Grid>
 </Window>
