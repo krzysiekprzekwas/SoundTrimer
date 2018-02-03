@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using WaveFormRendererLib;
 using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
 
 namespace SoundTrimer
 {
@@ -96,22 +97,29 @@ namespace SoundTrimer
 
             var img = rnd.Render(filePath, settings);
 
-            var bitmapImage = new BitmapImage();
+            var bmp = (Bitmap)img;
 
-            using (var ms = new MemoryStream())
+            aimg.Source = ToBitmapImage(bmp);
+
+        }
+
+        public BitmapImage ToBitmapImage(Bitmap bitmap)
+        {
+            using (MemoryStream stream = new MemoryStream())
             {
-                img.Save(ms, ImageFormat.Bmp);
-                ms.Seek(0, SeekOrigin.Begin);
+                bitmap.Save(stream, ImageFormat.Png); // Was .Bmp, but this did not show a transparent background.
 
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = ms;
-                bitmapImage.EndInit();
-
-                
+                stream.Position = 0;
+                BitmapImage result = new BitmapImage();
+                result.BeginInit();
+                // According to MSDN, "The default OnDemand cache option retains access to the stream until the image is needed."
+                // Force the bitmap to load right now so we can dispose the stream.
+                result.CacheOption = BitmapCacheOption.OnLoad;
+                result.StreamSource = stream;
+                result.EndInit();
+                result.Freeze();
+                return result;
             }
-
-            aimg.Source = bitmapImage;
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
