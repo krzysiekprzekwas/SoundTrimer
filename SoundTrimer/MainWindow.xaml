@@ -10,14 +10,14 @@
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
             <WrapPanel HorizontalAlignment="Center">
-                <Border  AllowDrop="True" Drop="Border_Drop">
+                <Border  AllowDrop="True" Drop="Border_Drop" Width="216">
                     <Border.Background>
                         <SolidColorBrush Color="AliceBlue"/>
                     </Border.Background>
-                    <StackPanel Width="175" Height="100" Orientation="Horizontal">
-                        <Button Name="btnLoad" Width="50" Click="btnLoad_Click" HorizontalAlignment="Center" VerticalAlignment="Center" >Load MP3</Button>
+                    <WrapPanel HorizontalAlignment="Center" Width="auto">
+                        <Button Name="btnLoad" Width="60" Click="btnLoad_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40" >Load MP3</Button>
                         <Label Content="or just drop file here" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </StackPanel>
+                    </WrapPanel>
                 </Border>
             </WrapPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

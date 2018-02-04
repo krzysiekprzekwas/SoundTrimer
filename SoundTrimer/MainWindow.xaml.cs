@@ -24,26 +24,24 @@ namespace SoundTrimer
 {
     public partial class MainWindow : Window
     {
-        private WaveOutEvent waveOut = new WaveOutEvent();
+        public MusicPlayer Player { get; set; }
 
-        private Mp3FileReader mp3Reader;
+        private bool _isDrag;
 
         private DispatcherTimer timer = new DispatcherTimer();
-
-        private bool _isDrag = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            
+            DisableControls();
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
-            lblStatus.Content = String.Format("{0} / {1}", mp3Reader.CurrentTime.ToString(@"mm\:ss"), mp3Reader.TotalTime.ToString(@"mm\:ss"));
+            lblStatus.Content = String.Format("{0} / {1}", Player.CurrentTime.ToString(@"mm\:ss"), Player.TotalTime.ToString(@"mm\:ss"));
 
             if (!_isDrag)
-                sliProgress.Value = mp3Reader.CurrentTime.TotalSeconds;
+                sliProgress.Value = Player.CurrentTime.TotalSeconds;
             
         }
         
@@ -59,26 +57,42 @@ namespace SoundTrimer
 
         private async void loadFile(string filePath)
         {
-            mp3Reader = new Mp3FileReader(filePath);
-            waveOut.Init(mp3Reader);
-            lblTitle.Content = System.IO.Path.GetFileName(filePath);
+            Player = new MusicPlayer(filePath);
+
+            lblTitle.Content = Player.SongTitle;
+
             sliProgress.Minimum = 0;
-            sliProgress.Maximum = mp3Reader.TotalTime.TotalSeconds;
+            sliProgress.Maximum = Player.TotalTime.TotalSeconds;
 
             rangeSlider.Minimum = 0;
-            rangeSlider.Maximum = mp3Reader.TotalTime.TotalSeconds;
+            rangeSlider.Maximum = Player.TotalTime.TotalSeconds;
 
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += timer_Tick;
 
-            btnPause.IsEnabled = true;
-            btnPlay.IsEnabled = true;
-            btnStop.IsEnabled = true;
+            EnableControls();
 
             var processedBitmap = await RenderWaveAsync(filePath);
             
-            
             aimg.Source = processedBitmap;
+        }
+
+        public void EnableControls()
+        {
+            btnPause.IsEnabled = true;
+            btnPlay.IsEnabled = true;
+            btnStop.IsEnabled = true;
+            sliProgress.IsEnabled = true;
+            rangeSlider.IsEnabled = true;
+        }
+
+        public void DisableControls()
+        {
+            btnPause.IsEnabled = false;
+            btnPlay.IsEnabled = false;
+            btnStop.IsEnabled = false;
+            sliProgress.IsEnabled = false;
+            rangeSlider.IsEnabled = false;
         }
 
         public async Task<BitmapImage> RenderWaveAsync(string filePath)
@@ -138,20 +152,19 @@ namespace SoundTrimer
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            waveOut.Play();
+            Player.Play();
             timer.Start();
         }
 
         private void btnPause_Click(object sender, RoutedEventArgs e)
         {
-            waveOut.Pause();
+            Player.Pause();
             timer.Stop();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            waveOut.Stop();
-            mp3Reader.Seek(0, SeekOrigin.Begin);
+            Player.Stop();
         }
 
         private void sliProgress_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -161,7 +174,7 @@ namespace SoundTrimer
             var val = sl.Value;
 
 
-            mp3Reader.CurrentTime = TimeSpan.FromSeconds((int)sliProgress.Value);
+            Player.CurrentTime = TimeSpan.FromSeconds((int)sliProgress.Value);
 
             _isDrag = false;
         }
@@ -188,7 +201,7 @@ namespace SoundTrimer
 
             var seconds = sl.LowerSlider.Value * sl.Maximum / 10;
 
-            mp3Reader.CurrentTime = TimeSpan.FromSeconds((int)seconds);
+            Player.CurrentTime = TimeSpan.FromSeconds((int)seconds);
             sliProgress.Value = seconds;
         }
     }
