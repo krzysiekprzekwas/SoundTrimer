@@ -64,6 +64,10 @@ namespace SoundTrimer
             lblTitle.Content = System.IO.Path.GetFileName(filePath);
             sliProgress.Minimum = 0;
             sliProgress.Maximum = mp3Reader.TotalTime.TotalSeconds;
+
+            rangeSlider.Minimum = 0;
+            rangeSlider.Maximum = mp3Reader.TotalTime.TotalSeconds;
+
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += timer_Tick;
 
@@ -152,7 +156,6 @@ namespace SoundTrimer
 
         private void sliProgress_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-
             var sl = sender as Slider;
 
             var val = sl.Value;
@@ -176,6 +179,17 @@ namespace SoundTrimer
                 
                 loadFile(files[0]);
             }
+        }
+
+        private void rangeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+
+            var sl = sender as RangeSlider;
+
+            var seconds = sl.LowerSlider.Value * sl.Maximum / 10;
+
+            mp3Reader.CurrentTime = TimeSpan.FromSeconds((int)seconds);
+            sliProgress.Value = seconds;
         }
     }
 }

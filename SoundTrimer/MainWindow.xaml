@@ -27,7 +27,7 @@
                 <Label Name="lblStatus" Content="00:00/00:00" HorizontalContentAlignment="Center" Margin="5" />
                 <Slider x:Name="sliProgress" Width="100" Thumb.DragCompleted="sliProgress_DragCompleted" Thumb.DragStarted="sliProgress_DragStarted"/>
             </StackPanel>
-            <local:RangeSlider x:Name="rangeSlider" Height="18"  LowerValue="10" UpperValue="50" Maximum="100" Minimum="0" Margin="162,0,174.429,0"  />
+            <local:RangeSlider x:Name="rangeSlider" Height="18" Thumb.DragCompleted="rangeSlider_DragCompleted" Margin="162,0,174.429,0"  />
             <WrapPanel HorizontalAlignment="Center">
                 <Button x:Name="btnPlay" IsEnabled="False" Click="btnPlay_Click">Play</Button>
                 <Button x:Name="btnPause" IsEnabled="False" Margin="5,0" Click="btnPause_Click">Pause</Button>
