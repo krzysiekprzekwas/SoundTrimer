@@ -65,6 +65,7 @@ namespace SoundTrimer
             sliProgress.Maximum = Player.TotalTime.TotalSeconds;
 
             rangeSlider.Minimum = 0;
+            rangeSlider.UpperSlider.Value = Player.TotalTime.TotalSeconds;
             rangeSlider.Maximum = Player.TotalTime.TotalSeconds;
 
             timer.Interval = TimeSpan.FromMilliseconds(100);
@@ -72,8 +73,13 @@ namespace SoundTrimer
 
             EnableControls();
 
-            var processedBitmap = await RenderWaveAsync(filePath);
+            var processedBitmap = await Task.Run(() => {
+                var bmp = RenderWave(filePath);
+                return bmp;
+            });
             
+            selectionRectangle.Visibility = Visibility.Visible;
+
             aimg.Source = processedBitmap;
         }
 
@@ -93,14 +99,6 @@ namespace SoundTrimer
             btnStop.IsEnabled = false;
             sliProgress.IsEnabled = false;
             rangeSlider.IsEnabled = false;
-        }
-
-        public async Task<BitmapImage> RenderWaveAsync(string filePath)
-        {
-            //on bitmap asynchronously
-            return await Task.Run(() => {
-                return RenderWave(filePath);
-            });
         }
 
         private BitmapImage RenderWave(string filePath)
@@ -196,13 +194,28 @@ namespace SoundTrimer
 
         private void rangeSlider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-
             var sl = sender as RangeSlider;
 
             var seconds = sl.LowerSlider.Value * sl.Maximum / 10;
 
             Player.CurrentTime = TimeSpan.FromSeconds((int)seconds);
             sliProgress.Value = seconds;
+
+            AdjustRangeRectangle();
+        }
+
+        private void AdjustRangeRectangle()
+        {
+            var startPercent = rangeSlider.LowerSlider.Value / 10;
+            var endPercent = rangeSlider.UpperSlider.Value / 10;
+
+            selectionRectangle.Width = 450 * (endPercent - startPercent);
+            selectionRectangle.Margin = new Thickness(450 * startPercent, 0, 450 * (1-endPercent), 0);
+        }
+
+        private void rangeSlider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            AdjustRangeRectangle();
         }
     }
 }
