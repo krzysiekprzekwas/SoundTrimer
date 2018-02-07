@@ -29,7 +29,7 @@ Instalation of project should be covered by Visual Studio. Just dowload or fork 
 ![UI](screenshots/sc1.png?raw=true "Trimmer UI")
 
 ### Trimmer UI after selection media file
-![UI with music](screenshots/sc1.png?raw=true "Trimmer UI after selection media file")
+![UI with music](screenshots/sc2.png?raw=true "Trimmer UI after selection media file")
 
 ### Trimmer UI during trim section selection
-![Trim selection](faceTrackerImages/img3.png?raw=true "Trimmer UI during trimming section selection")
+![Trim selection](screenshots/sc3.png?raw=true "Trimmer UI during trimming section selection")
