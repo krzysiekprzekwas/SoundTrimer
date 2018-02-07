@@ -88,6 +88,7 @@ namespace SoundTrimer
             btnPause.IsEnabled = true;
             btnPlay.IsEnabled = true;
             btnStop.IsEnabled = true;
+            btnTrim.IsEnabled = true;
             sliProgress.IsEnabled = true;
             rangeSlider.IsEnabled = true;
         }
@@ -97,6 +98,7 @@ namespace SoundTrimer
             btnPause.IsEnabled = false;
             btnPlay.IsEnabled = false;
             btnStop.IsEnabled = false;
+            btnTrim.IsEnabled = false;
             sliProgress.IsEnabled = false;
             rangeSlider.IsEnabled = false;
         }
@@ -216,6 +218,11 @@ namespace SoundTrimer
         private void rangeSlider_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             AdjustRangeRectangle();
+        }
+
+        private void btnTrim_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

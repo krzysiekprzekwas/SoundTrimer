@@ -32,6 +32,7 @@
                 <Button x:Name="btnPlay" IsEnabled="False" Click="btnPlay_Click">Play</Button>
                 <Button x:Name="btnPause" IsEnabled="False" Margin="5,0" Click="btnPause_Click">Pause</Button>
                 <Button x:Name="btnStop" IsEnabled="False" Click="btnStop_Click">Stop</Button>
+                <Button x:Name="btnTrim" IsEnabled="False" Margin="5,0,0,0" Click="btnTrim_Click">Trim</Button>
             </WrapPanel>
             <Grid>
                 <Image x:Name="aimg" Panel.ZIndex="0" Width="450" Height="100"/>
