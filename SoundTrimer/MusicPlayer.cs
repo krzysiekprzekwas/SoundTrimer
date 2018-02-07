@@ -67,5 +67,22 @@ namespace SoundTrimer
             waveOut.Stop();
             mp3Reader.CurrentTime = TimeSpan.FromSeconds(0);
         }
+
+        public void TrimMp3(string outputPath, TimeSpan? begin, TimeSpan? end)
+        {            
+            using (var writer = File.Create(outputPath))
+            {
+                Mp3Frame frame;
+                while ((frame = mp3Reader.ReadNextFrame()) != null)
+                    if (mp3Reader.CurrentTime >= begin || !begin.HasValue)
+                    {
+                        if (mp3Reader.CurrentTime <= end || !end.HasValue)
+                            writer.Write(frame.RawData, 0, frame.RawData.Length);
+                        else break;
+                    }
+            }
+
+            mp3Reader.CurrentTime = TimeSpan.FromSeconds(0);
+        }
     }
 }

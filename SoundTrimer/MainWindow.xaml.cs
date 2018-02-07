@@ -222,7 +222,40 @@ namespace SoundTrimer
 
         private void btnTrim_Click(object sender, RoutedEventArgs e)
         {
+            var currTime = Player.CurrentTime;
 
+            Player.Stop();
+
+            SaveFileDialog dlg = new SaveFileDialog
+            {
+                FileName = "trimed_" + Player.SongTitle, // Default file name
+                DefaultExt = ".mp3", // Default file extension
+                Filter = "Text documents (.mp3)|*.mp3" // Filter files by extension
+            };
+
+            // Show save file dialog box
+            var result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+
+                var start = rangeSlider.LowerSlider.Value * rangeSlider.Maximum / 10;
+
+                var s = TimeSpan.FromSeconds((int)start);
+
+                var end = rangeSlider.UpperSlider.Value * rangeSlider.Maximum / 10;
+
+                var en = TimeSpan.FromSeconds((int)end);
+
+                Player.TrimMp3(filename, s, en);
+            }
+
+            Player.CurrentTime = currTime;
+
+            Player.Play();
         }
     }
 }
