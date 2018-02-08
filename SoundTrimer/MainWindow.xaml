@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoundTrimer"
         mc:Ignorable="d"
+        Icon="scissors.png"
         Title="Sound Trimer" Height="350" Width="525">
 
     <Grid>
