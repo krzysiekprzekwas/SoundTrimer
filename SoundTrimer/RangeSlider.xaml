@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="30" d:DesignWidth="300">
     <UserControl.Resources>
-        <ControlTemplate x:Key="simpleSlider" TargetType="{x:Type Slider}">
+        <ControlTemplate x:Key="simpleLeftSlider" TargetType="{x:Type Slider}">
             <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -23,12 +23,34 @@
                             <Thumb x:Name="Thumb">
                                 <Thumb.Template>
                                     <ControlTemplate TargetType="Thumb">
-                                        <Rectangle Fill="Red" 
-                                                   Stroke="Black"
-                                                   StrokeThickness="1" 
-                                                   Width="10"
-                                                   Height="18"
-                                                   SnapsToDevicePixels="True"/>
+                                        <Polygon Points="-10,0 0,0, 0,25 0,10" Stroke="Black" Fill="Green" />
+                                    </ControlTemplate>
+                                </Thumb.Template>
+                            </Thumb>
+                        </Track.Thumb>
+                    </Track>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate x:Key="simpleRigthSlider" TargetType="{x:Type Slider}">
+            <Border SnapsToDevicePixels="true" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle x:Name="PART_SelectionRange"/>
+
+                    <Track x:Name="PART_Track" Grid.Row="1">
+                        <Track.Thumb>
+                            <Thumb x:Name="Thumb">
+                                <Thumb.Template>
+                                    <ControlTemplate TargetType="Thumb">
+                                        <WrapPanel>
+                                            <Polygon Points="10,0, 0,0, 0,25 0,10" Stroke="Black" Fill="Red" Margin="0,0,-10,0" Stretch="Uniform"/>
+                                        </WrapPanel>
                                     </ControlTemplate>
                                 </Thumb.Template>
                             </Thumb>
@@ -40,23 +62,25 @@
 
     </UserControl.Resources>
     <Grid VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="13*"/>
+        </Grid.RowDefinitions>
         <Border VerticalAlignment="Center" Height="1" 
-                Margin="5,0,5,0"/>
+                Margin="5,10.429,5,14.714" Grid.Row="1"/>
 
         <Slider x:Name="LowerSlider"
                 Minimum="{Binding ElementName=root, Path=Minimum}"
                 Maximum="{Binding ElementName=root, Path=Maximum}"
                 Value="{Binding ElementName=root, Path=LowerValue, Mode=TwoWay}"
-                Template="{StaticResource simpleSlider}"
-                Margin="0,0,10,0"
+                Template="{StaticResource simpleLeftSlider}" Grid.RowSpan="2"
                 />
 
         <Slider x:Name="UpperSlider"
                 Minimum="{Binding ElementName=root, Path=Minimum}"
                 Maximum="{Binding ElementName=root, Path=Maximum}"
                 Value="{Binding ElementName=root, Path=UpperValue, Mode=TwoWay}"
-                Template="{StaticResource simpleSlider}"
-                Margin="10,0,0,0"
+                Template="{StaticResource simpleRigthSlider}" Grid.RowSpan="2"
                 />
     </Grid>
 </UserControl>

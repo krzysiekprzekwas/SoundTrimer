@@ -37,7 +37,7 @@
             <Grid>
                 <Image x:Name="aimg" Panel.ZIndex="0" Width="450" Height="100"/>
                 <Rectangle x:Name="selectionRectangle" Width="450" Panel.ZIndex="1"  Height="100" Fill="Blue" Opacity=".3" Stroke="Blue" StrokeThickness="2" IsHitTestVisible="False" Visibility="Hidden" />
-                <local:RangeSlider x:Name="rangeSlider"  Width="450" Height="100" Thumb.DragDelta="rangeSlider_DragDelta" Thumb.DragCompleted="rangeSlider_DragCompleted" Visibility="Hidden"/>
+                <local:RangeSlider x:Name="rangeSlider" VerticalAlignment="Center" Width="450" Height="100" Thumb.DragDelta="rangeSlider_DragDelta" Thumb.DragCompleted="rangeSlider_DragCompleted" Visibility="Hidden"  />
             </Grid>
         </StackPanel>
     </Grid>
