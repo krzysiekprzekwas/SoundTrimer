@@ -40,7 +40,7 @@
 
     </UserControl.Resources>
     <Grid VerticalAlignment="Top">
-        <Border BorderThickness="0,1,0,0" BorderBrush="Black" VerticalAlignment="Center" Height="1" 
+        <Border VerticalAlignment="Center" Height="1" 
                 Margin="5,0,5,0"/>
 
         <Slider x:Name="LowerSlider"

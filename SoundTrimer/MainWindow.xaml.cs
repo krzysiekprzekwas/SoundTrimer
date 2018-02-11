@@ -79,7 +79,7 @@ namespace SoundTrimer
             });
             
             selectionRectangle.Visibility = Visibility.Visible;
-
+            rangeSlider.Visibility = Visibility.Visible;
             aimg.Source = processedBitmap;
         }
 
