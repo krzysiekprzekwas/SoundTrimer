@@ -51,7 +51,10 @@ namespace SoundTrimer
             openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                loadFile(openFileDialog.FileName);
+                if (System.IO.Path.GetExtension(openFileDialog.FileName).ToLower() == "mp3")
+                    loadFile(openFileDialog.FileName);
+                else
+                    MessageBox.Show("Invalid audio file!", "Error");
             }
         }
 
